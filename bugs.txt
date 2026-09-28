@@ -1,0 +1,7 @@
+#	Type	Where to find it	What happens
+1	Critical	Account → Change Password	The current password is never checked. Enter a wrong one, then a valid new one, and it still says "Password updated".
+2	Critical	Checkout → My Orders (and Admin → Orders)	The saved order total leaves out the $10 shipping fee. Checkout shows the correct total, but the order shows less.
+3	Functional	Product page → "Add to Wishlist"	The PDP button only adds and never removes, so repeated clicks create duplicates. The heart on product cards works properly.
+4	Functional	Product page → Submit Review	Every review is saved as 5 stars, whatever you pick in the dropdown.
+5	UI	Product cards (Home, Shop, Search)	The price is a very light grey (#bbb), so it is hard to read in Light mode. It looks fine in Dark mode.
+6	UI	Product page → Qty and Add to Cart row	The Add to Cart button is shorter than the qty box (34px vs 44px) and has square corners.
