@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AzureCart – QA Sandbox</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+--bg:#f5f7ff;
+--card:#ffffff;
+--tx:#25233a;
+--mut:#68677d;
+--pri:#4f46e5;
+--pri2:#7c3aed;
+--sky:#60a5fa;
+--gold:#8b5cf6;
+--line:#e1e5f2;
+--ok:#4f9a7f;
+--bad:#b5545f;
+--sh:0 6px 22px rgba(79,70,229,.10)
+}
+
+[data-theme="dark"]{
+--bg:#111827;
+--card:#1f2937;
+--tx:#f3f4f6;
+--mut:#a5adbd;
+--pri:#818cf8;
+--pri2:#a78bfa;
+--gold:#a78bfa;
+--line:#374151;
+--sh:0 6px 22px rgba(0,0,0,.35)
+}
+*{box-sizing:border-box;margin:0}body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--tx);line-height:1.6}
+h1,h2,h3,h4,.logo{font-family:Outfit,Georgia,serif}
+a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer}
+input,select,textarea{font:inherit;width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--tx)}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--sky);border-color:var(--sky)}
+label{display:block;font-size:13px;color:var(--mut);margin:8px 0;font-weight:500}
+.wrap{max-width:1200px;margin:auto;padding:0 16px}
+header{background:linear-gradient(90deg,#4338ca,#7c3aed);color:#fff;position:sticky;top:0;z-index:20;box-shadow:0 4px 18px rgba(44,43,98,.3)}
+header .wrap{display:flex;align-items:center;gap:12px;min-height:66px;flex-wrap:wrap;padding-top:6px;padding-bottom:6px}
+.logo{
+font-weight:700;
+font-size:26px;
+color:#ffffff;
+letter-spacing:-.5px
+}
+.logo b{
+color:#a5b4fc
+}
+.sq{flex:1;min-width:180px;max-width:340px}.sq input{border-radius:22px;border:0;padding:9px 16px;background:rgba(255,255,255,.95);color:#28263f}
+nav{display:flex;gap:10px;margin-left:auto;align-items:center;flex-wrap:wrap}nav>a:not(.ib){opacity:.92;font-weight:500}nav>a:not(.ib):hover{color:var(--gold)}
+.ib{
+background:transparent;
+border:0;
+color:#fff;
+border-radius:10px;
+padding:8px 10px;
+position:relative;
+font-size:20px;
+display:inline-flex;
+align-items:center;
+justify-content:center;
+gap:6px;
+transition:.2s
+}
+.ib:hover{
+background:rgba(255,255,255,.14);
+transform:translateY(-1px)
+}
+
+.ib svg{
+width:21px;
+height:21px;
+fill:none;
+stroke:currentColor;
+stroke-width:1.8;
+stroke-linecap:round;
+stroke-linejoin:round
+}
+
+.badge{
+position:absolute;
+top:0;
+right:0;
+background:#ffffff;
+color:#4f46e5;
+font-size:10px;
+font-weight:700;
+min-width:18px;
+height:18px;
+line-height:18px;
+text-align:center;
+border-radius:50%;
+padding:0 4px;
+border:2px solid #5b4be7
+}
+.btn{background:linear-gradient(90deg,var(--pri),var(--pri2));color:#fff;border:0;border-radius:10px;padding:10px 20px;font-weight:600;transition:.2s;box-shadow:0 4px 12px rgba(75,79,163,.25)}.btn:hover{transform:translateY(-1px);filter:brightness(1.08)}
+.btn.o{background:none;border:1.5px solid var(--pri);color:var(--pri);box-shadow:none}.btn.d{background:var(--bad);box-shadow:none}.btn.g{background:linear-gradient(90deg,#8a72b8,#b9a3dc);color:#221c36}.btn.sm{padding:6px 12px;font-size:13px}
+.hero{background:radial-gradient(circle at 85% 20%,rgba(143,166,216,.45),transparent 45%),linear-gradient(120deg,#292860,#4b4fa3 55%,#7a72c4);color:#fff;padding:84px 0;border-radius:0 0 34px 34px;position:relative;overflow:hidden}
+.hero small{
+display:inline-block;
+color:#ffffff;
+letter-spacing:3px;
+font-weight:700;
+font-size:13px;
+background:rgba(255,255,255,.12);
+border:1px solid rgba(255,255,255,.25);
+padding:6px 12px;
+border-radius:20px
+}.hero h1{font-size:clamp(30px,5.2vw,58px);max-width:640px;line-height:1.15;margin:8px 0}.hero p{margin:14px 0 26px;max-width:520px;opacity:.9}
+h2.t{margin:40px 0 18px;font-size:28px;position:relative;padding-bottom:10px}h2.t::after{content:"";position:absolute;left:0;bottom:0;width:56px;height:3px;background:linear-gradient(90deg,var(--gold),var(--sky));border-radius:3px}
+.grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.cats{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.cat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;text-align:center;font-weight:600;box-shadow:var(--sh);transition:.2s}.cat:hover{border-color:var(--gold);transform:translateY(-4px)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;position:relative;box-shadow:var(--sh);transition:.25s}.card:hover{transform:translateY(-5px)}
+.card img{width:100%;height:200px;object-fit:cover;display:block}.card .b{padding:14px}.card small{color:var(--gold);font-weight:600}
+.card .pr{color:#bbb;font-weight:700;font-size:19px;margin:4px 0 8px}
+.card .wl{position:absolute;top:10px;right:10px;background:var(--card);border:0;border-radius:50%;width:36px;height:36px;box-shadow:var(--sh)}
+.trust{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin:34px 0}
+.trust div{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;text-align:center;box-shadow:var(--sh);font-size:14px}
+footer{background:linear-gradient(180deg,#2a2960,#1d1c47);color:#c9c8e8;margin-top:56px;padding:40px 0 18px}
+.fg{display:grid;gap:26px;grid-template-columns:2fr 1fr 1fr 1.4fr}.fg h4{color:var(--gold);margin-bottom:8px}.fg a{display:block;opacity:.85;font-size:14px}.fg a:hover{color:#fff}
+.fb{text-align:center;border-top:1px solid rgba(255,255,255,.12);margin-top:24px;padding-top:14px;font-size:13px}
+.pdp{display:grid;gap:34px;grid-template-columns:1fr 1fr;margin-top:26px}
+.sl{position:relative;border-radius:16px;overflow:hidden;background:var(--card);border:1px solid var(--line);box-shadow:var(--sh)}.sl img{width:100%;height:430px;object-fit:cover;display:block}
+.sl button{position:absolute;top:50%;transform:translateY(-50%);background:rgba(42,41,96,.8);color:#fff;border:0;width:40px;height:40px;border-radius:50%;font-size:20px}
+.pdp .qty{width:80px;height:44px}.pdp .add{height:34px;border-radius:0}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:14px 0}
+.lk{background:none;border:0;color:var(--pri);font-weight:600}
+.box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin:16px 0;box-shadow:var(--sh)}
+.two{display:grid;gap:18px;grid-template-columns:2fr 1fr}.f2{display:grid;gap:0 14px;grid-template-columns:1fr 1fr}
+.acc{display:grid;gap:20px;grid-template-columns:230px 1fr;margin-top:24px}
+.side a{display:block;padding:10px 14px;border-radius:10px;margin-bottom:4px;font-weight:500}.side a.on{background:linear-gradient(90deg,var(--pri),var(--pri2));color:#fff}
+.auth{max-width:440px;margin:40px auto}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{color:var(--mut);font-weight:600}
+.tw{overflow-x:auto}
+.tabs{display:flex;gap:8px;margin:18px 0;flex-wrap:wrap}.tabs button{padding:9px 18px;border:1px solid var(--line);background:var(--card);color:var(--tx);border-radius:10px;font-weight:500}.tabs .on{background:linear-gradient(90deg,var(--pri),var(--pri2));color:#fff;border-color:transparent}
+.stats{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}.stats div{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:12px;padding:12px;box-shadow:var(--sh)}.stats b{font-size:22px;display:block;font-family:Outfit,sans-serif}
+.steps{display:flex;gap:8px;margin-bottom:14px}.steps span{flex:1;text-align:center;padding:8px;border-radius:10px;background:var(--line);font-size:13px;color:var(--tx)}.steps .on{background:var(--pri);color:#fff}
+.ov{position:fixed;inset:0;background:rgba(3,15,35,.62);display:none;align-items:center;justify-content:center;z-index:150}.ov.s{display:flex}
+.md{background:var(--card);padding:26px;border-radius:16px;max-width:420px;width:92%;max-height:90vh;overflow:auto;border-top:4px solid var(--gold)}
+.dr{position:fixed;top:0;right:-420px;width:380px;max-width:100%;height:100%;background:var(--card);z-index:100;transition:.3s;padding:18px;overflow:auto;box-shadow:-4px 0 24px rgba(0,0,0,.3)}.dr.s{right:0}
+.mi{display:flex;gap:10px;margin:12px 0;align-items:center}.mi img{width:58px;height:58px;object-fit:cover;border-radius:10px}
+#toast{position:fixed;top:78px;left:50%;transform:translateX(-50%);color:#fff;padding:11px 22px;border-radius:12px;display:none;z-index:300;font-weight:500;box-shadow:0 8px 26px rgba(0,0,0,.35);max-width:92%;text-align:center}
+.tag{padding:3px 10px;border-radius:12px;color:#fff;font-size:12px;font-weight:600;white-space:nowrap}
+.s-Placed{background:#5b6fc0}.s-Pending{background:#b58f5c}.s-InProgress{background:#5c93b3}.s-Shipped{background:#7b62b5}.s-Delivered{background:#4f9a7f}.s-Cancelled{background:#b5545f}
+.cp{display:flex;gap:8px}.cp input{flex:1}
+@media(max-width:900px){.pdp,.two,.acc,.fg{grid-template-columns:1fr 1fr}.pdp,.two,.acc{grid-template-columns:1fr}.sl img{height:300px}}
+@media(max-width:600px){.hd{display:none!important}.f2,.fg{grid-template-columns:1fr}.hero{padding:44px 0}.sq{order:3;max-width:none;min-width:100%}nav{margin-left:auto}}
+
+hr{border:0;border-top:1px solid var(--line);margin:16px 0}
+.box p{margin:0 0 12px}.box h3{margin:0 0 16px}.box h4{margin:18px 0 10px}
+.box>.btn{margin-top:14px}.box .box{margin:18px 0}.box .tw{margin:14px 0}.box .f2{margin:6px 0 10px}
+.sr{display:flex;justify-content:space-between;gap:12px;margin:0 0 12px!important}
+.sl2{margin:0 0 16px;padding-bottom:6px;border-bottom:1px solid var(--line)}.sl2 .sr{margin:0 0 10px!important;font-size:14px}
+.tt{display:flex;justify-content:space-between;margin:16px 0 20px!important;padding-top:16px;border-top:1px dashed var(--line)}
+.cp{margin:6px 0 10px}.hint{display:block;color:var(--mut);margin-top:12px;font-size:12px}
+.pmo{display:flex;align-items:center;gap:12px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;margin:12px 0;color:var(--tx);font-size:15px;cursor:pointer}
+.pmo input{width:auto;accent-color:var(--pri)}.pmo:has(input:checked){border-color:var(--pri);background:rgba(99,102,241,.08)}
+.rvb{padding:14px 16px;border:1px solid var(--line);border-radius:12px;margin:14px 0}.rvb h4{margin:0 0 8px!important;color:var(--pri)}.rvb p{margin:0!important;line-height:1.8}
+.hint2{margin:14px 0;color:var(--mut)}
+.qc{display:inline-flex;align-items:center;gap:6px;margin-top:8px;border:1px solid var(--line);border-radius:10px;padding:2px 6px}
+.qc button{background:none;border:0;color:var(--pri);font-size:18px;width:26px;font-weight:700}.qc span{min-width:22px;text-align:center;font-weight:600}
+.mi{margin:18px 0!important}.dr hr{margin:18px 0}.side a{margin-bottom:6px}
+.ad>label:nth-child(3){grid-column:1/-1}
+@media(max-width:600px){.ad>label:nth-child(3){grid-column:auto}}
+</style></head><body>
+<header><div class="wrap"><a class="logo" href="#/">Azure<b>Cart</b></a>
+<div class="sq"><input id="sq" placeholder="🔍 Search products, SKU, category…" onkeydown="if(event.key=='Enter')sr()"></div>
+<nav><a class="hd" href="#/">Home</a><a class="hd" href="#/shop">Shop</a><a class="hd" href="#/admin">Admin</a><span id="au" style="display:contents"></span>
+<button class="ib" onclick="theme()" id="tb" title="Theme" aria-label="Change theme"></button>
+<button class="ib" onclick="cart(1)" id="cb" title="Cart">
+<svg viewBox="0 0 24 24" aria-hidden="true">
+<path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.6L21 8H6"></path>
+<circle cx="10" cy="20" r="1"></circle>
+<circle cx="18" cy="20" r="1"></circle>
+</svg>
+<span class="badge" id="cn">0</span>
+</button></nav></div></header>
+<div id="app"></div><footer id="ft"></footer>
+<div class="dr" id="dr"></div><div class="ov" id="ov"><div class="md" id="md"></div></div><div id="toast"></div>
+<script>
+const $=s=>document.querySelector(s),img=(id,w)=>`https://images.unsplash.com/photo-${id}?w=${w||600}&q=70&auto=format&fit=crop`;
+const FB="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400'%3E%3Crect fill='%23dcdcf2' width='100%25' height='100%25'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' fill='%234b4fa3' font-size='28'%3ENo image%3C/text%3E%3C/svg%3E";
+const I=(u,c)=>`<img src="${u}" alt="" onerror="this.onerror=null;this.src='${FB}'" ${c||''}>`;
+const ST=['Placed','Pending','In Progress','Shipped','Delivered','Cancelled'],sc=s=>'s-'+s.replace(/\s/g,'');
+const E={name:'',phone:'',line:'',city:'',zip:'',country:''};
+const D={products:[
+{id:1,name:"Aurora Wireless Headphones",sku:"AUD-001",price:129,cat:"Audio",imgs:[img('1505740420928-5e560c06d30e'),img('1583394838336-acd977736f90')],desc:"Over-ear Bluetooth headphones with active noise cancelling and 30h battery."},
+{id:2,name:"Regal Classic Watch",sku:"WAT-002",price:249,cat:"Watches",imgs:[img('1523275335684-37898b6baf30'),img('1546868871-7041f2a55e12')],desc:"Stainless steel analog watch with sapphire glass and blue dial."},
+{id:3,name:"Skyline Running Sneakers",sku:"FTW-003",price:89,cat:"Footwear",imgs:[img('1542291026-7eec264c27ff'),img('1560343090-f0409e92791a')],desc:"Lightweight breathable sneakers built for daily runs."},
+{id:4,name:"Marina Sunglasses",sku:"ACC-004",price:59,cat:"Accessories",imgs:[img('1572635196237-14b3f281503f'),img('1511499767150-a48a237f0083')],desc:"UV400 polarized sunglasses with a premium frame."},
+{id:5,name:"Vista Mirrorless Camera",sku:"ELE-005",price:699,cat:"Electronics",imgs:[img('1526170375885-4d8ecf77b99f'),img('1516035069371-29a1b244cc32')],desc:"24MP mirrorless camera with 4K video and fast autofocus."},
+{id:6,name:"Pulse Smartwatch",sku:"ELE-006",price:179,cat:"Electronics",imgs:[img('1546868871-7041f2a55e12'),img('1523275335684-37898b6baf30')],desc:"Fitness tracking, heart rate, GPS and 7-day battery."},
+{id:7,name:"Glide Wireless Mouse",sku:"ELE-007",price:35,cat:"Electronics",imgs:[img('1527864550417-7fd91fc51a46'),img('1615663245857-ac93bb7c39e7')],desc:"Ergonomic silent-click mouse with USB-C recharging."},
+{id:8,name:"Voyager Backpack",sku:"ACC-008",price:75,cat:"Accessories",imgs:[img('1553062407-98eeb64c6a62'),img('1491553895911-0055eca6402d')],desc:"Water-resistant 25L backpack with laptop compartment."}],
+cats:["Audio","Watches","Footwear","Accessories","Electronics"],
+accts:[{id:1,name:"Test User",email:"test@example.com",phone:"9999999999",pw:"Test@123",ship:{...E},bill:{...E}},
+{id:2,name:"Riya Shah",email:"riya@example.com",phone:"9000000001",pw:"Riya@123",ship:{...E},bill:{...E}},
+{id:3,name:"Amit Patel",email:"amit@example.com",phone:"9000000002",pw:"Amit@123",ship:{...E},bill:{...E}}],
+cart:[],wish:[],cmp:[],
+orders:[{id:'ORD-1001',date:'20/9/2026, 10:15',email:'riya@example.com',cust:'Riya Shah',items:[{name:'Aurora Wireless Headphones',sku:'AUD-001',price:129,q:1}],ship:{name:'Riya Shah',phone:'9000000001',line:'12 Lake Road',city:'Rajkot',zip:'360001',country:'India'},pay:'Card',coupon:'',disc:0,total:129,status:'Shipped'},
+{id:'ORD-1002',date:'24/9/2026, 16:40',email:'amit@example.com',cust:'Amit Patel',items:[{name:'Regal Classic Watch',sku:'WAT-002',price:249,q:1}],ship:{name:'Amit Patel',phone:'9000000002',line:'5 Park Street',city:'Ahmedabad',zip:'380001',country:'India'},pay:'Cash on Delivery',coupon:'',disc:0,total:249,status:'Pending'}],
+reviews:[{pid:1,name:"Riya Shah",rating:5,text:"Great sound quality!"},{pid:2,name:"Amit Patel",rating:4,text:"Looks elegant."}],
+coupons:[{code:'SAVE10',type:'pct',val:10,min:0},{code:'BLUE20',type:'pct',val:20,min:100},{code:'FREESHIP',type:'ship',val:0,min:0}],
+cur:null,coupon:'',pref:'system',nid:1002,nx:''};
+let S;try{S=JSON.parse(localStorage.getItem('azc2'))||D}catch(e){S=D}
+const save=()=>localStorage.setItem('azc2',JSON.stringify(S)),P=id=>S.products.find(p=>p.id==id),$$=n=>'$'+Number(n).toFixed(2),g=id=>$('#'+id).value.trim();
+const U=()=>S.accts.find(a=>a.email==S.cur)||null;
+const toast=m=>{const t=$('#toast');t.textContent=m;t.style.background=/fill|enter|invalid|required|wrong|match|exist|must|max|not |valid|incorrect|already|login|minimum|cannot/i.test(m)?'#b5495b':'#3f8f7a';t.style.display='block';clearTimeout(t.t);t.t=setTimeout(()=>t.style.display='none',2600)};
+const sub=()=>S.cart.reduce((a,c)=>a+P(c.id).price*c.q,0),SHIP=10;
+const cpn=()=>S.coupons.find(c=>c.code==S.coupon);
+const disc=()=>{const c=cpn();return c&&c.type=='pct'&&sub()>=c.min?sub()*c.val/100:0};
+const shp=()=>{const c=cpn();return c&&c.type=='ship'&&sub()>=c.min?0:SHIP};
+const tot=()=>sub()-disc()+shp();
+/* theme */
+function theme(){S.pref={system:'light',light:'dark',dark:'system'}[S.pref];save();ap();toast('Theme: '+S.pref)}
+const THEME_ICONS={
+  system:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8M12 16v4"></path></svg>',
+  light:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path></svg>',
+  dark:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>'
+};
+function ap(){
+  const d=S.pref=='system'?(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'):S.pref;
+  document.documentElement.dataset.theme=d;
+  const b=$('#tb');
+  b.innerHTML=THEME_ICONS[S.pref];
+  b.title='Theme: '+S.pref;
+}
+matchMedia('(prefers-color-scheme:dark)').addEventListener('change',ap);
+/* auth */
+function login(){const a=S.accts.find(x=>x.email==g('le').toLowerCase()&&x.pw==$('#lp').value);if(!a)return toast('Invalid email or password');S.cur=a.email;const n=S.nx||'#/account/info';S.nx='';save();toast('Welcome, '+a.name);location.hash=n;R()}
+function reg(){const n=g('rn'),e=g('re').toLowerCase(),p=$('#rp').value;if(!n||!/^\S+@\S+\.\S+$/.test(e))return toast('Enter valid name and email');if(p.length<6)return toast('Password must be 6+ characters');if(p!=$('#rc').value)return toast('Passwords do not match');if(S.accts.some(a=>a.email==e))return toast('Email already registered');S.accts.push({id:++S.nid,name:n,email:e,phone:g('rph'),pw:p,ship:{...E},bill:{...E}});S.cur=e;save();toast('Account created');location.hash='#/account/info'}
+function out(){S.cur=null;CK={step:1,pay:'card',ship:{}};save();toast('Logged out');location.hash='#/';R()}
+function hd(){const u=U();$('#au').innerHTML=u?`<a class="ib" href="#/account/info" title="Account"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M4.5 21c.7-4 3.1-6 7.5-6s6.8 2 7.5 6"></path></svg><span class="hd">${u.name.split(' ')[0]}</span></a><button class="ib" onclick="out()">Logout</button>`:`<a class="ib" href="#/login" title="Login"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M4.5 21c.7-4 3.1-6 7.5-6s6.8 2 7.5 6"></path></svg><span class="hd">Login</span></a><a class="ib hd" href="#/register">Register</a>`}
+function sr(){const v=g('sq');if(!v)return toast('Enter a search term');location.hash='#/search/'+encodeURIComponent(v)}
+/* cards / cart */
+const card=p=>`<div class="card"><a href="#/pdp/${p.id}">${I(p.imgs[0])}</a><button class="wl" onclick="wish(${p.id})">${S.wish.includes(p.id)?'❤️':'🤍'}</button><div class="b"><small>${p.cat}</small><div><a href="#/pdp/${p.id}"><b>${p.name}</b></a></div><div class="pr">${$$(p.price)}</div><button class="btn sm" onclick="add(${p.id},1)">Add to cart</button></div></div>`;
+function add(id,q){const c=S.cart.find(x=>x.id==id);c?c.q+=q:S.cart.push({id,q});save();bd();toast('Added to cart');cart(1)}
+function bd(){$('#cn').textContent=S.cart.reduce((a,c)=>a+c.q,0);if($('#dr').classList.contains('s'))cart(1)}
+function cart(o){const d=$('#dr');d.classList.toggle('s',!!o);d.innerHTML=`<div class="row"><b style="font-size:20px;font-family:Outfit,sans-serif">Mini Cart</b><button class="lk" style="margin-left:auto" onclick="cart(0)">✕</button></div>`+(S.cart.length?S.cart.map(c=>{const p=P(c.id);return `<div class="mi">${I(p.imgs[0])}<div style="flex:1"><b>${p.name}</b><br><small style="color:var(--mut)">${$$(p.price)} each</small><div class="qc"><button onclick="cq(${c.id},-1)" aria-label="Decrease quantity">−</button><span>${c.q}</span><button onclick="cq(${c.id},1)" aria-label="Increase quantity">+</button></div></div><div style="text-align:right"><b>${$$(p.price*c.q)}</b><br><button class="lk" onclick="rmc(${c.id})">🗑</button></div></div>`}).join('')+`<hr><div class="row"><b>Subtotal</b><b style="margin-left:auto">${$$(sub())}</b></div><a class="btn" style="display:block;text-align:center;margin-bottom:8px" href="#/cart" onclick="cart(0)">View Cart</a><a class="btn o" style="display:block;text-align:center" href="#/checkout" onclick="cart(0)">Checkout</a>`:'<p>Your cart is empty.</p>')}
+function rmc(id){mod(`<h3>Remove item?</h3><p style="margin:10px 0">Remove <b>${P(id).name}</b> from your cart?</p><div class="row"><button class="btn o" id="rc-no" onclick="mod()">Cancel</button><button class="btn d" id="rc-yes" onclick="rm(${id})">Yes, Remove</button></div>`)}
+function rm(id){S.cart=S.cart.filter(c=>c.id!=id);save();mod();toast('Item removed');bd();if(location.hash=='#/cart'||location.hash=='#/checkout')R()}
+function cq(id,d){const c=S.cart.find(x=>x.id==id);c.q=Math.max(1,c.q+d);save();bd();if(/#\/(cart|checkout)/.test(location.hash))R()}
+function wish(id){S.wish.includes(id)?S.wish=S.wish.filter(x=>x!=id):S.wish.push(id);save();toast('Wishlist updated');R()}
+function pwish(id){S.wish.push(id);save();toast('Added to wishlist');R()}
+function cmp(id){if(S.cmp.includes(id)){S.cmp=S.cmp.filter(x=>x!=id);toast('Removed from compare')}else{if(S.cmp.length>=4)return toast('Max 4 products');S.cmp.push(id);toast('Added to compare')}save();R()}
+/* coupon + summary */
+function sumIn(l){const c=cpn(),r=(a,b,x)=>`<p class="sr"${x||''}><span>${a}</span><span>${b}</span></p>`;return `<h3>Order Summary</h3>${l?`<div class="sl2">${S.cart.map(i=>r(P(i.id).name+' × '+i.q,$$(P(i.id).price*i.q))).join('')}</div>`:''}${r('Subtotal',$$(sub()))}${disc()?r('Discount ('+S.coupon+')','−'+$$(disc()),' style="color:var(--ok)"'):''}${r('Shipping',shp()?$$(shp()):'FREE')}<h3 class="tt"><span>Total</span><span>${$$(tot())}</span></h3>
+<div class="cp"><input id="cc" placeholder="Coupon code" value="${S.coupon}"><button class="btn sm" onclick="apc()">Apply</button></div>${c?`<div><button class="lk" onclick="S.coupon='';save();sm()">Remove coupon</button></div>`:''}<small class="hint">Try SAVE10, BLUE20 (min $100), FREESHIP</small>`}
+const sm=()=>{const e=$('#sm');e.innerHTML=sumIn(+e.dataset.l)};
+function apc(){const c=S.coupons.find(x=>x.code==g('cc').toUpperCase());if(!c)return toast('Invalid coupon code');if(sub()<c.min)return toast('Minimum order '+$$(c.min)+' required');S.coupon=c.code;save();toast('Coupon applied');sm()}
+/* views */
+const V={};
+V.home=()=>`<section class="hero"><div class="wrap"><small>NEW COLLECTION 2026</small><h1>Luxury tech &amp; lifestyle, in shades of blue.</h1><p>Discover premium audio, watches, footwear and more. Use code <b>SAVE10</b> for 10% off.</p><a class="btn g" href="#/shop">Shop Now</a></div></section>
+<div class="wrap"><h2 class="t">Featured Categories</h2><div class="cats">${S.cats.map(c=>`<a class="cat" href="#/shop/${c}">${c}</a>`).join('')}</div>
+<h2 class="t">Featured Products</h2><div class="grid">${S.products.map(card).join('')}</div>
+<div class="trust"><div>🚚<br><b>Free Delivery</b><br><small>With FREESHIP coupon</small></div><div>🔒<br><b>Secure Payments</b><br><small>Card &amp; COD</small></div><div>↩️<br><b>Easy Returns</b><br><small>7-day policy</small></div><div>🎧<br><b>24/7 Support</b><br><small>Always here</small></div></div></div>`;
+V.shop=h=>{const c=decodeURIComponent(h[1]||''),l=S.products.filter(p=>!c||p.cat==c);return `<div class="wrap"><h2 class="t">${c||'All Products'}</h2><div class="row"><a class="btn sm o" href="#/shop">All</a>${S.cats.map(x=>`<a class="btn sm o" href="#/shop/${x}">${x}</a>`).join('')}</div><div class="grid">${l.map(card).join('')||'<p>No products found.</p>'}</div></div>`};
+V.search=h=>{const q=decodeURIComponent(h[1]||''),k=q.toLowerCase(),l=S.products.filter(p=>[p.name,p.sku,p.cat,p.desc].join(' ').toLowerCase().includes(k));return `<div class="wrap"><h2 class="t">Search results for "${q.replace(/</g,'&lt;')}" (${l.length})</h2><div class="grid">${l.map(card).join('')||'<p>No products match your search.</p>'}</div></div>`};
+let si=0;
+V.pdp=h=>{const p=P(h[1]);if(!p)return '<div class="wrap"><h2 class="t">Product not found</h2></div>';si=0;const rv=S.reviews.filter(r=>r.pid==p.id);
+return `<div class="wrap"><div class="pdp"><div class="sl" id="sl">${I(p.imgs[0],'id="si"')}<button style="left:10px" onclick="sld(${p.id})">‹</button><button style="right:10px" onclick="sld(${p.id})">›</button></div>
+<div><small style="color:var(--gold);font-weight:600">${p.cat}</small><h1>${p.name}</h1><p>SKU: <b>${p.sku}</b></p><h2 style="color:var(--pri)">${$$(p.price)}</h2>
+<div class="row"><input class="qty" id="q" type="number" min="1" value="1"><button class="btn add" onclick="add(${p.id},Math.max(1,+$('#q').value||1))">Add to Cart</button></div>
+<div class="row"><button class="lk" onclick="pwish(${p.id})">${S.wish.includes(p.id)?'❤️':'🤍'} Add to Wishlist</button><button class="lk" onclick="cmp(${p.id})">⚖️ ${S.cmp.includes(p.id)?'Remove from':'Add to'} Compare</button></div>
+<h3>Description</h3><p>${p.desc}</p></div></div>
+<div class="box"><h3>Reviews (${rv.length})</h3>${rv.map(r=>`<p><b>${r.name}</b> <span style="color:var(--gold)">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span><br>${r.text}</p><hr>`).join('')||'<p>No reviews yet.</p>'}
+<h4 style="margin-top:14px">Write a review</h4>${U()?`<div class="f2"><label>Rating<select id="rt"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select></label><label>Review<input id="rx"></label></div><button class="btn sm" onclick="rev(${p.id})">Submit Review</button>`:'<p><a class="lk" href="#/login">Login</a> to write a review.</p>'}</div></div>`};
+function sld(id){const p=P(id);si=1-si;$('#si').src=p.imgs[si]}
+function rev(id){const t=g('rx');if(!t)return toast('Enter your review first');S.reviews.push({pid:id,name:U().name,rating:5,text:t});save();toast('Review submitted');R()}
+V.cart=()=>`<div class="wrap"><h2 class="t">Shopping Cart</h2>${S.cart.length?`<div class="two"><div class="box tw"><table><tr><th>Product</th><th>Price</th><th>Qty</th><th>Total</th><th></th></tr>${S.cart.map(c=>{const p=P(c.id);return `<tr><td>${p.name}</td><td>${$$(p.price)}</td><td><button class="btn sm o" onclick="cq(${c.id},-1)">−</button> ${c.q} <button class="btn sm o" onclick="cq(${c.id},1)">+</button></td><td>${$$(p.price*c.q)}</td><td><button class="lk" onclick="rmc(${c.id})">Remove</button></td></tr>`}).join('')}</table></div>
+<div class="box"><div id="sm" data-l="0">${sumIn(0)}</div><a class="btn" style="display:block;text-align:center;margin-top:12px" href="#/checkout">Proceed to Checkout</a></div></div>`:'<div class="box">Your cart is empty. <a class="lk" href="#/shop">Continue shopping</a></div>'}</div>`;
+V.login=()=>`<div class="wrap"><div class="box auth"><h2>Welcome back</h2><label>Email<input id="le" type="email"></label><label>Password<input id="lp" type="password" onkeydown="if(event.key=='Enter')login()"></label><button class="btn" style="width:100%;margin-top:8px" onclick="login()">Login</button><p style="margin-top:12px">New here? <a class="lk" href="#/register">Create an account</a></p><small style="color:var(--mut)">Demo: test@example.com / Test@123</small></div></div>`;
+V.register=()=>`<div class="wrap"><div class="box auth"><h2>Create account</h2><label>Full name<input id="rn"></label><label>Email<input id="re" type="email"></label><label>Phone<input id="rph"></label><label>Password (min 6)<input id="rp" type="password"></label><label>Confirm password<input id="rc" type="password"></label><button class="btn" style="width:100%;margin-top:8px" onclick="reg()">Register</button><p style="margin-top:12px">Already registered? <a class="lk" href="#/login">Login</a></p></div></div>`;
+/* checkout */
+let CK={step:1,pay:'card',ship:{}};
+const CS={India:"Andhra Pradesh,Arunachal Pradesh,Assam,Bihar,Chhattisgarh,Delhi,Goa,Gujarat,Haryana,Himachal Pradesh,Jharkhand,Karnataka,Kerala,Madhya Pradesh,Maharashtra,Manipur,Meghalaya,Mizoram,Nagaland,Odisha,Punjab,Rajasthan,Sikkim,Tamil Nadu,Telangana,Tripura,Uttar Pradesh,Uttarakhand,West Bengal","United States":"Alabama,Alaska,Arizona,Arkansas,California,Colorado,Connecticut,Delaware,Florida,Georgia,Hawaii,Idaho,Illinois,Indiana,Iowa,Kansas,Kentucky,Louisiana,Maine,Maryland,Massachusetts,Michigan,Minnesota,Mississippi,Missouri,Montana,Nebraska,Nevada,New Hampshire,New Jersey,New Mexico,New York,North Carolina,North Dakota,Ohio,Oklahoma,Oregon,Pennsylvania,Rhode Island,South Carolina,South Dakota,Tennessee,Texas,Utah,Vermont,Virginia,Washington,West Virginia,Wisconsin,Wyoming","United Kingdom":"England,Scotland,Wales,Northern Ireland",Canada:"Alberta,British Columbia,Manitoba,New Brunswick,Newfoundland and Labrador,Nova Scotia,Ontario,Prince Edward Island,Quebec,Saskatchewan",Australia:"New South Wales,Victoria,Queensland,Western Australia,South Australia,Tasmania,Australian Capital Territory,Northern Territory","United Arab Emirates":"Abu Dhabi,Dubai,Sharjah,Ajman,Umm Al Quwain,Ras Al Khaimah,Fujairah",Germany:"Baden-Württemberg,Bavaria,Berlin,Brandenburg,Bremen,Hamburg,Hesse,Lower Saxony,Mecklenburg-Vorpommern,North Rhine-Westphalia,Rhineland-Palatinate,Saarland,Saxony,Saxony-Anhalt,Schleswig-Holstein,Thuringia"};
+Object.keys(CS).forEach(k=>CS[k]=CS[k].split(','));
+const AF=['name','phone','line','country','state','city','zip'];
+const fl=(px,k,l,v)=>`<label>${l}<input id="${px}${k}" value="${v||''}"></label>`;
+const stt=(px,c,v)=>`<label>State / Province<select id="${px}state" ${c?'':'disabled'}><option value="">${c?'Select state':'Select country first'}</option>${(CS[c]||[]).map(s=>`<option ${s==v?'selected':''}>${s}</option>`).join('')}</select></label>`;
+const aform=(px,o)=>{o=o||{};return `<div class="f2 ad">${fl(px,'name','Full name',o.name)}${fl(px,'phone','Phone',o.phone)}${fl(px,'line','Street address',o.line)}<label>Country<select id="${px}country" onchange="cst('${px}')"><option value="">Select country</option>${Object.keys(CS).map(c=>`<option ${c==o.country?'selected':''}>${c}</option>`).join('')}</select></label><div id="${px}sw">${stt(px,o.country,o.state)}</div>${fl(px,'city','City',o.city)}${fl(px,'zip','ZIP / Postal code',o.zip)}</div>`};
+const cst=px=>{$('#'+px+'sw').innerHTML=stt(px,g(px+'country'),'')};
+const ad=o=>`${o.line}, ${o.city}${o.state?', '+o.state:''} ${o.zip}, ${o.country}`;
+const aget=px=>{const o={};AF.forEach(k=>o[k]=g(px+k));return o};
+V.checkout=()=>{if(!S.cart.length)return '<div class="wrap"><h2 class="t">Checkout</h2><div class="box">Cart is empty. <a class="lk" href="#/shop">Shop</a></div></div>';if(!CK.ship.name)CK.ship={...U().ship};return `<div class="wrap"><h2 class="t">Checkout</h2><div class="two"><div class="box"><div class="steps">${['1. Shipping','2. Payment','3. Review'].map((s,i)=>`<span class="${CK.step==i+1?'on':''}">${s}</span>`).join('')}</div><div id="ck">${ckb()}</div></div><div class="box" id="sm" data-l="1">${sumIn(1)}</div></div></div>`};
+function ckb(){if(CK.step==1)return `<h3>Shipping Address</h3>${aform('c',CK.ship)}<div class="row" style="margin-top:18px"><button class="btn" onclick="ck1()">Continue to Payment</button></div>`;
+if(CK.step==2)return `<h3>Payment Method</h3><label class="pmo"><input type="radio" name="pm" ${CK.pay=='card'?'checked':''} onchange="CK.pay='card';ckr()"><span>Credit / Debit Card</span></label><label class="pmo"><input type="radio" name="pm" ${CK.pay=='cod'?'checked':''} onchange="CK.pay='cod';ckr()"><span>Cash on Delivery</span></label>${CK.pay=='card'?`<div class="f2" style="margin-top:16px"><label>Card number<input id="cn1" maxlength="19" placeholder="4111 1111 1111 1111"></label><label>Name on card<input id="cn2"></label><label>Expiry<input id="cn3" placeholder="MM/YY"></label><label>CVV<input id="cn4" maxlength="4" type="password"></label></div>`:'<p class="hint2">Pay in cash when your order arrives.</p>'}<div class="row" style="margin-top:22px"><button class="btn o" onclick="CK.step=1;ckr()">Back</button><button class="btn" onclick="ck2()">Review Order</button></div>`;
+const s=CK.ship;return `<h3>Review &amp; Place Order</h3><div class="rvb"><h4>Shipping to</h4><p>${s.name} · ${s.phone}<br>${ad(s)}</p></div><div class="rvb"><h4>Payment</h4><p>${CK.pay=='card'?'Card':'Cash on Delivery'}</p></div><div class="row" style="margin-top:22px"><button class="btn o" onclick="CK.step=2;ckr()">Back</button><button class="btn" onclick="place()">Place Order</button></div>`}
+const ckr=()=>{$('#ck').innerHTML=ckb();document.querySelectorAll('.steps span').forEach((e,i)=>e.classList.toggle('on',i+1==CK.step))};
+function ck1(){const o=aget('c');if(Object.values(o).some(v=>!v))return toast('Fill all shipping fields');CK.ship=o;CK.step=2;ckr()}
+function ck2(){if(CK.pay=='card'){if(g('cn1').replace(/\s/g,'').length<13||!g('cn2')||!g('cn3')||g('cn4').length<3)return toast('Enter valid card details')}CK.step=3;ckr()}
+function place(){const u=U(),o={id:'ORD-'+(++S.nid),date:new Date().toLocaleString(),email:u.email,cust:u.name,items:S.cart.map(c=>({name:P(c.id).name,sku:P(c.id).sku,price:P(c.id).price,q:c.q})),ship:CK.ship,pay:CK.pay=='card'?'Card':'Cash on Delivery',coupon:S.coupon,disc:disc(),total:sub()-disc(),status:'Placed'};
+if(!u.ship.name)u.ship=CK.ship;S.orders.unshift(o);S.cart=[];S.coupon='';CK={step:1,pay:'card',ship:{}};save();bd();toast('Order placed: '+o.id);location.hash='#/account/orders'}
+/* account */
+const TABS=[['info','Account Info'],['addresses','Addresses'],['wishlist','Wishlist'],['compare','Compare List'],['password','Change Password'],['email','Change Email'],['reviews','My Reviews'],['orders','My Orders']];
+V.account=h=>{const t=h[1]||'info',u=U();let b='';
+if(t=='info')b=`<h3>Account Information</h3><div class="f2"><label>Name<input id="an" value="${u.name}"></label><label>Phone<input id="ap" value="${u.phone||''}"></label></div><p>Email: <b>${u.email}</b></p><button class="btn" onclick="U().name=g('an');U().phone=g('ap');save();hd();toast('Account updated')">Save</button>`;
+if(t=='addresses')b=`<h3>Shipping Address</h3>${aform('s',u.ship)}<h3>Billing Address</h3>${aform('b',u.bill)}<button class="btn" onclick="U().ship=aget('s');U().bill=aget('b');save();toast('Addresses saved')">Save Addresses</button>`;
+if(t=='wishlist')b=`<h3>Wishlist</h3>${S.wish.length?`<div class="grid">${S.wish.map((id,i)=>{const p=P(id);return p?`<div class="card">${I(p.imgs[0])}<div class="b"><b>${p.name}</b><div>${$$(p.price)}</div><button class="btn sm" onclick="add(${id},1)">Add to cart</button> <button class="btn sm o" onclick="S.wish.splice(${i},1);save();R()">Remove</button></div></div>`:''}).join('')}</div>`:'<p>No items in wishlist.</p>'}`;
+if(t=='compare')b=`<h3>Compare List</h3>${S.cmp.length?`<div class="tw"><table><tr><th></th>${S.cmp.map(id=>`<td>${I(P(id).imgs[0],'style="width:110px;border-radius:8px"')}</td>`).join('')}</tr>${[['Name','name'],['SKU','sku'],['Category','cat'],['Price','price'],['Description','desc']].map(([l,k])=>`<tr><th>${l}</th>${S.cmp.map(id=>`<td>${k=='price'?$$(P(id)[k]):P(id)[k]}</td>`).join('')}</tr>`).join('')}<tr><th></th>${S.cmp.map(id=>`<td><button class="btn sm o" onclick="cmp(${id})">Remove</button></td>`).join('')}</tr></table></div>`:'<p>No products to compare.</p>'}`;
+if(t=='password')b=`<h3>Change Password</h3><label>Current password<input id="p1" type="password"></label><label>New password (min 6)<input id="p2" type="password"></label><label>Confirm new password<input id="p3" type="password"></label><button class="btn" onclick="cpw()">Update Password</button>`;
+if(t=='email')b=`<h3>Change Email</h3><p>Current: <b>${u.email}</b></p><label>New email<input id="e1" type="email"></label><label>Confirm password<input id="e2" type="password"></label><button class="btn" onclick="cem()">Update Email</button>`;
+if(t=='reviews'){const r=S.reviews.filter(x=>x.name==u.name);b=`<h3>My Reviews</h3>${r.map(x=>`<p><b>${P(x.pid)?.name||'(deleted product)'}</b> <span style="color:var(--gold)">${'★'.repeat(x.rating)}</span><br>${x.text}</p><hr>`).join('')||'<p>You have not reviewed any products yet.</p>'}`}
+if(t=='orders'){const o=S.orders.filter(x=>x.email==u.email);b=`<h3>My Orders</h3>${o.map(o=>`<div class="box" style="box-shadow:none"><div class="row"><b>${o.id}</b><span class="tag ${sc(o.status)}">${o.status}</span><small style="margin-left:auto">${o.date}</small></div><div class="tw"><table><tr><th>Product</th><th>SKU</th><th>Price</th><th>Qty</th></tr>${o.items.map(i=>`<tr><td>${i.name}</td><td>${i.sku}</td><td>${$$(i.price)}</td><td>${i.q}</td></tr>`).join('')}</table></div><p><b>Ship to:</b> ${o.ship.name}, ${ad(o.ship)}<br><b>Payment:</b> ${o.pay}${o.coupon?`<br><b>Coupon:</b> ${o.coupon} (−${$$(o.disc)})`:''}</p><h4>Total: ${$$(o.total)}</h4>${['Placed','Pending'].includes(o.status)?`<button class="btn sm d" onclick="dl('cancel','${o.id}')">Cancel Order</button>`:''}</div>`).join('')||'<p>No orders yet.</p>'}`}
+return `<div class="wrap"><div class="acc"><div class="side box" style="padding:10px;height:fit-content">${TABS.map(([k,l])=>`<a href="#/account/${k}" class="${t==k?'on':''}">${l}</a>`).join('')}</div><div class="box" style="margin:0">${b}</div></div></div>`};
+function cpw(){const n=$('#p2').value;if(n.length<6)return toast('Password must be 6+ characters');if(n!=$('#p3').value)return toast('Passwords do not match');U().pw=n;save();toast('Password updated')}
+function cem(){const e=g('e1').toLowerCase(),u=U();if(!/^\S+@\S+\.\S+$/.test(e))return toast('Invalid email');if($('#e2').value!=u.pw)return toast('Wrong password');if(S.accts.some(a=>a.email==e))return toast('Email already registered');S.orders.forEach(o=>{if(o.email==u.email)o.email=e});u.email=e;S.cur=e;save();toast('Email updated');R()}
+/* admin */
+let AT='products',OF='';
+const cu=e=>S.accts.find(a=>a.email==e);
+V.admin=()=>{let b='';const rev=S.orders.filter(o=>o.status!='Cancelled').reduce((a,o)=>a+o.total,0);
+const st=`<div class="stats"><div><small>Products</small><b>${S.products.length}</b></div><div><small>Categories</small><b>${S.cats.length}</b></div><div><small>Customers</small><b>${S.accts.length}</b></div><div><small>Orders</small><b>${S.orders.length}</b></div><div><small>Revenue</small><b>${$$(rev)}</b></div></div>`;
+if(AT=='products')b=`<h3>Add Product</h3><div class="f2"><label>Name<input id="pn"></label><label>SKU<input id="ps"></label><label>Price<input id="pp" type="number" min="0"></label><label>Category<select id="pc">${S.cats.map(c=>`<option>${c}</option>`).join('')}</select></label><label>Image 1 URL (optional)<input id="pi1"></label><label>Image 2 URL (optional)<input id="pi2"></label></div><label>Description<textarea id="pd"></textarea></label><button class="btn" onclick="ap1()">Add Product</button><h3 style="margin-top:22px">All Products</h3><div class="tw"><table><tr><th>ID</th><th>Name</th><th>SKU</th><th>Category</th><th>Price</th><th>Actions</th></tr>${S.products.map(p=>`<tr><td>${p.id}</td><td>${p.name}</td><td>${p.sku}</td><td>${p.cat}</td><td>${$$(p.price)}</td><td><a class="btn sm o" href="#/pdp/${p.id}">View</a> <button class="btn sm d" onclick="dl('products',${p.id})">Delete</button></td></tr>`).join('')}</table></div>`;
+if(AT=='cats')b=`<h3>Add Category</h3><div class="row"><input id="cnm" placeholder="Category name" style="max-width:300px"><button class="btn" onclick="ac()">Add Category</button></div><h3>All Categories</h3><table><tr><th>#</th><th>Name</th><th>Products</th><th>Actions</th></tr>${S.cats.map((c,i)=>`<tr><td>${i+1}</td><td>${c}</td><td>${S.products.filter(p=>p.cat==c).length}</td><td><a class="btn sm o" href="#/shop/${c}">View</a> <button class="btn sm d" onclick="dl('cats',${i})">Delete</button></td></tr>`).join('')}</table>`;
+if(AT=='customers')b=`<h3>Add Customer</h3><div class="f2"><label>Name<input id="cu1"></label><label>Email<input id="cu2" type="email"></label></div><small>New customers get the default password <b>Welcome@123</b>.</small><br><button class="btn" style="margin-top:8px" onclick="acu()">Add Customer</button><h3 style="margin-top:22px">All Customers</h3><div class="tw"><table><tr><th>ID</th><th>Name</th><th>Email</th><th>Orders</th><th>Actions</th></tr>${S.accts.map(c=>`<tr><td>${c.id}</td><td>${c.name}</td><td>${c.email}</td><td>${S.orders.filter(o=>o.email==c.email).length}</td><td><button class="btn sm o" onclick="vc(${c.id})">View</button> <button class="btn sm d" onclick="dl('customers',${c.id})">Delete</button></td></tr>`).join('')}</table></div>`;
+if(AT=='orders'){const l=S.orders.filter(o=>!OF||o.status==OF);b=`<div class="row"><h3>All Orders</h3><select style="max-width:200px;margin-left:auto" onchange="OF=this.value;R()"><option value="">All statuses</option>${ST.map(s=>`<option ${OF==s?'selected':''}>${s}</option>`).join('')}</select></div><div class="tw"><table><tr><th>Order</th><th>Date</th><th>Customer</th><th>Items</th><th>Total</th><th>Payment</th><th>Status</th><th>Actions</th></tr>${l.map(o=>`<tr><td>${o.id}</td><td>${o.date}</td><td>${o.cust}<br><small>${o.email}</small></td><td>${o.items.reduce((a,i)=>a+i.q,0)}</td><td>${$$(o.total)}</td><td>${o.pay}</td><td><select onchange="os('${o.id}',this.value)" style="min-width:130px">${ST.map(s=>`<option ${o.status==s?'selected':''}>${s}</option>`).join('')}</select></td><td><button class="btn sm o" onclick="vo('${o.id}')">View</button> <button class="btn sm d" onclick="dl('orders','${o.id}')">Delete</button></td></tr>`).join('')||'<tr><td colspan=8>No orders found.</td></tr>'}</table></div>`}
+if(AT=='coupons')b=`<h3>Add Coupon</h3><div class="f2"><label>Code<input id="kc"></label><label>Type<select id="kt"><option value="pct">Percent discount</option><option value="ship">Free shipping</option></select></label><label>Value (%)<input id="kv" type="number" min="0" value="10"></label><label>Minimum order ($)<input id="km" type="number" min="0" value="0"></label></div><button class="btn" onclick="akc()">Add Coupon</button><h3 style="margin-top:22px">All Coupons</h3><table><tr><th>Code</th><th>Type</th><th>Value</th><th>Min</th><th>Actions</th></tr>${S.coupons.map((c,i)=>`<tr><td>${c.code}</td><td>${c.type=='pct'?'Percent':'Free shipping'}</td><td>${c.type=='pct'?c.val+'%':'-'}</td><td>${$$(c.min)}</td><td><button class="btn sm d" onclick="dl('coupons',${i})">Delete</button></td></tr>`).join('')}</table>`;
+return `<div class="wrap"><h2 class="t">Admin Panel</h2>${st}<div class="tabs">${[['products','Products'],['cats','Categories'],['customers','Customers'],['orders','Orders'],['coupons','Coupons']].map(([k,l])=>`<button class="${AT==k?'on':''}" onclick="AT='${k}';R()">${l}</button>`).join('')}</div><div class="box tw">${b}</div></div>`};
+function ap1(){const n=g('pn'),s=g('ps'),p=parseFloat(g('pp'));if(!n||!s||isNaN(p)||p<0)return toast('Name, SKU and valid price required');if(S.products.some(x=>x.sku==s))return toast('SKU already exists');const a=g('pi1')||D.products[S.products.length%8].imgs[0],b=g('pi2')||D.products[(S.products.length+1)%8].imgs[1];S.products.push({id:++S.nid,name:n,sku:s,price:p,cat:g('pc'),imgs:[a,b],desc:g('pd')||'No description.'});save();toast('Product added');R()}
+function ac(){const n=g('cnm');if(!n)return toast('Enter a category name');if(S.cats.some(c=>c.toLowerCase()==n.toLowerCase()))return toast('Category already exists');S.cats.push(n);save();toast('Category added');R()}
+function acu(){const n=g('cu1'),e=g('cu2').toLowerCase();if(!n||!/^\S+@\S+\.\S+$/.test(e))return toast('Enter valid name and email');if(S.accts.some(a=>a.email==e))return toast('Email already registered');S.accts.push({id:++S.nid,name:n,email:e,phone:'',pw:'Welcome@123',ship:{...E},bill:{...E}});save();toast('Customer added');R()}
+function akc(){const c=g('kc').toUpperCase(),v=parseFloat(g('kv')),m=parseFloat(g('km'))||0;if(!c||S.coupons.some(x=>x.code==c))return toast('Enter a unique coupon code');if(g('kt')=='pct'&&(isNaN(v)||v<=0||v>100))return toast('Enter valid percent 1-100');S.coupons.push({code:c,type:g('kt'),val:v||0,min:m});save();toast('Coupon added');R()}
+function os(id,s){S.orders.find(o=>o.id==id).status=s;save();toast(id+' → '+s);R()}
+function mod(h){$('#md').innerHTML=h||'';$('#ov').classList.toggle('s',!!h)}
+function vc(id){const c=S.accts.find(x=>x.id==id),o=S.orders.filter(x=>x.email==c.email);mod(`<h3>Customer #${c.id}</h3><p>${c.name}<br>${c.email}<br>${c.phone||'-'}</p><p>Orders: <b>${o.length}</b> · Spent: <b>${$$(o.filter(x=>x.status!='Cancelled').reduce((a,x)=>a+x.total,0))}</b></p><button class="btn" onclick="mod()">Close</button>`)}
+function vo(id){const o=S.orders.find(x=>x.id==id);mod(`<h3>${o.id} <span class="tag ${sc(o.status)}">${o.status}</span></h3><p>${o.cust} (${o.email})<br>${o.date}</p>${o.items.map(i=>`<p>${i.name} (${i.sku}) × ${i.q} – ${$$(i.price*i.q)}</p>`).join('')}<p><b>Ship to:</b> ${o.ship.name}, ${ad(o.ship)}<br><b>Payment:</b> ${o.pay}${o.coupon?`<br><b>Coupon:</b> ${o.coupon}`:''}</p><h4>Total: ${$$(o.total)}</h4><button class="btn" onclick="mod()">Close</button>`)}
+function dl(t,id){const nm={products:()=>P(id).name,cats:()=>S.cats[id],customers:()=>S.accts.find(x=>x.id==id).name,orders:()=>id,coupons:()=>S.coupons[id].code,cancel:()=>id}[t]();const c=t=='cancel';mod(`<h3>${c?'Cancel Order':'Confirm Delete'}</h3><p style="margin:10px 0">${c?'Are you sure you want to cancel order':'Are you sure you want to delete'} <b>${nm}</b>?${c?'':' This cannot be undone.'}</p><div class="row"><button class="btn o" id="dc" onclick="mod()">${c?'Keep Order':'Cancel'}</button><button class="btn d" id="dy" onclick="dy('${t}','${id}')">${c?'Yes, Cancel':'Yes, Delete'}</button></div>`)}
+function dy(t,id){if(t=='products'){cl([+id])}else if(t=='cats'){const c=S.cats[id];cl(S.products.filter(p=>p.cat==c).map(p=>p.id));S.cats.splice(id,1)}
+else if(t=='customers'){const a=S.accts.find(x=>x.id==id);if(S.cur==a.email)S.cur=null;S.accts=S.accts.filter(x=>x.id!=id)}
+else if(t=='orders')S.orders=S.orders.filter(o=>o.id!=id);else if(t=='coupons'){if(S.coupons[id].code==S.coupon)S.coupon='';S.coupons.splice(id,1)}
+else S.orders.find(o=>o.id==id).status='Cancelled';save();mod();toast('Done');bd();R()}
+function cl(ids){S.products=S.products.filter(p=>!ids.includes(p.id));S.cart=S.cart.filter(c=>!ids.includes(c.id));S.wish=S.wish.filter(x=>!ids.includes(x));S.cmp=S.cmp.filter(x=>!ids.includes(x))}
+$('#ov').addEventListener('click',e=>{if(e.target.id=='ov')mod()});
+/* footer + router */
+$('#ft').innerHTML=`<div class="wrap"><div class="fg"><div><div class="logo" style="color:#fff">Azure<b>Cart</b></div><p style="font-size:14px;margin-top:6px">Premium tech &amp; lifestyle products. A QA sandbox for manual and automation testing.</p></div><div><h4>Shop</h4><a href="#/shop">All Products</a><a href="#/shop/Audio">Audio</a><a href="#/shop/Watches">Watches</a><a href="#/shop/Electronics">Electronics</a></div><div><h4>Account</h4><a href="#/login">Login</a><a href="#/register">Register</a><a href="#/account/orders">My Orders</a><a href="#/admin">Admin Panel</a></div><div><h4>Contact</h4><a>support@azurecart.test</a><a>+91 90000 00000</a><a>Rajkot, Gujarat</a></div></div><div class="fb">© 2026 AzureCart · Demo store · No real payments</div></div>`;
+function R(){const h=location.hash.slice(2).split('/'),n=h[0]||'home';if((n=='account'||n=='checkout')&&!U()){S.nx=location.hash;save();toast('Please login to continue');location.hash='#/login';return}
+$('#app').innerHTML=(V[n]||V.home)(h);hd();bd()}
+addEventListener('hashchange',()=>{R();scrollTo(0,0)});ap();R();
+</script></body></html>
